@@ -1,0 +1,109 @@
+<script>
+
+const CHOICES = ['rock', 'paper', 'scissors'];
+
+function computerPlay() {
+    //Computer randomly selects rock, paper, or scissors
+    return randomChoice(CHOICES);
+}
+
+function randomChoice(array) {
+    // returns a random choice from the array
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+function playerPlay() {
+    //Prompts the player to select rock, paper, or scissors
+        // initialize the playerChoice variable in the function scope
+    let playerChoice
+        // begina a validation loop
+    let keepGoing = true;
+    while (keepGoing) {
+        playerChoice = (prompt("Please make your selection:" +
+                                  "\n(Rock, Paper, or Scissors")).toLowerCase();
+        if (CHOICES.includes(playerChoice)) {
+            keepGoing = false;
+        }
+        else {
+            alert("Incorrect choice.")
+        }
+        }
+    return playerChoice;
+}
+
+function playRound(playerSelection, computerSelection) {
+    //Plays a single round of rock, paper, scissors
+        // initialize the winner variable
+    let winner;
+        // conditionals based on the player's selection
+    if (playerSelection === "rock") {
+        if (computerSelection === "rock") {
+            winner = "tie";
+        } else if (computerSelection === "paper") {
+            winner = "computer";
+        } else {
+            winner = "player";
+        }
+    }
+    else if (playerSelection === "paper") {
+        if (computerSelection === "rock") {
+            winner = "player";
+        } else if (computerSelection === "paper") {
+            winner = "tie";
+        } else {
+            winner = "computer";
+        }
+    }
+    else {
+        if (computerSelection === "rock") {
+            winner = "computer";
+        } else if (computerSelection === "paper") {
+            winner = "player";
+        } else {
+            winner = "tie";
+        }
+    }
+        // inform the player of the result
+    winnerConsole(winner, playerSelection, computerSelection)
+        // return winner (player or computer)
+    return winner;
+}
+
+function winnerConsole(winner, playerSelection, computerSelection) {
+    //Writes a line in the console informing the player if the won or lost
+    if (winner === "player") {
+        alert(`You win! ${capitalizeFirstLetter(playerSelection)} ` +
+              `beats ${computerSelection}.`)
+    } else if (winner === "computer") {
+        alert(`You lose! ${capitalizeFirstLetter(computerSelection)} ` +
+              `beats ${playerSelection}.`)
+    } else {
+        alert(`It's a tie! You both picked ${playerSelection}`)
+    }
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+}
+
+function game() {
+    //Plays through five rounds and returns the final score
+        //initialize the win counter for player and computer
+    let playerWins = 0, computerWins = 0;
+
+    for (let i = 0; i < 5; i++) {
+        let winner = playRound(playerPlay(), computerPlay())
+        if (winner === "player") {
+            playerWins++
+        }
+        if (winner === "computer") {
+            computerWins++
+        }
+    }
+    console.log("After five games, the score is:",
+                `Player - ${playerWins}`,
+                `Computer - ${computerWins}`)
+}
+
+
+</script>
